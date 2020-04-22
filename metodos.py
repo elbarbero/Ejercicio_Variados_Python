@@ -23,6 +23,7 @@ def validateName(name, minC, maxC):
 			return False
 	except (TypeError, Exception) as ex:
 		print(type(ex).__name__, '->', ex)
+		print(printExceptionMessage())
 		return False
 
 
@@ -42,6 +43,7 @@ def validatePassword(password, length):
 			return False
 	except (TypeError, Exception) as ex:
 		print(type(ex).__name__, '->', ex)
+		print(printExceptionMessage())
 		return False
 
 containsLowerCase = lambda cadena: [ True if c.islower() else False for c in cadena]
@@ -65,6 +67,7 @@ def EsPar_Numero(numero):
 		return True if numero % 2 == 0 else False
 	except TypeError as ex:
 		print(type(ex).__name__, '->', ex)
+		print(printExceptionMessage())
 		return False
 
 def EsPar_Lista(numeros):
@@ -78,6 +81,7 @@ def EsPar_Lista(numeros):
 				yield n
 	except TypeError as ex:
 		print(type(ex).__name__, '->', ex)
+		print(printExceptionMessage())
 
 def EsImpar_Lista(numeros):
 	"""Comprueba si los números de una lista son impar
@@ -90,4 +94,38 @@ def EsImpar_Lista(numeros):
 				yield n
 	except TypeError as ex:
 		print(type(ex).__name__, '->', ex)
+		print(printExceptionMessage())
+
+def printExceptionMessage():
+	"""
+		Metodo para mostrar un mensaje de error según la excepción producida
+			* return el mensaje a mostrar
+	"""
+	import sys, traceback
+	exc_type, exc_value, exc_traceback = sys.exc_info()
+	track = traceback.format_exception(exc_type, exc_value, exc_traceback)
+	return traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2, file=sys.stdout)
+
+def convertStringToByte(*args):
+	"""Convierte un String a Byte
+		* args -> n argumentos que se quieren convertir a Byte
+		* yield argumento ya convertido en un generator object
+	"""
+	for arg in args:
+		try:
+			yield str(arg).encode()
+		except Exception as ex:
+			print(printExceptionMessage())
+
+def convertByteToString(*args):
+	"""Convierte un Byte a String
+		* args -> n argumentos que se quieren convertir a String
+		* yield argumento ya convertido en un generator object
+	"""
+	for arg in args:
+		try:
+			yield arg.decode()
+		except Exception as ex:
+			print(printExceptionMessage())
+
 
